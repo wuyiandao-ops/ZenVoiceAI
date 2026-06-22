@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZenVoiceAI 禪音智友 - 無障礙語音助手</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- 引入 Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="navbar">
+
+        <nav class="nav-buttons">
+            <!-- 預設載入 NO4 -->
+            <button class="nav-btn active" data-target="http://127.0.0.1:8000" aria-label="切換至 Cbeta 名詞查詢">Cbeta 名詞查詢</button>
+            <button class="nav-btn" data-target="http://localhost:5173" aria-label="切換至 文字轉檔與朗讀">文字轉檔與朗讀</button>
+            <button class="nav-btn" data-target="http://127.0.0.1:5000" aria-label="切換至 智能語音MP3撥放">智能語音MP3撥放</button>
+        </nav>
+
+        <div class="tools-section">
+            <button id="btn-tutorial" class="tool-btn" aria-label="開啟操作教學">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z" /></svg>
+                <span>操作教學</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="content-container">
+        <div class="loader" id="loader">
+            <div class="spinner"></div>
+            <p>正在為您準備服務，請稍候...</p>
+        </div>
+        <iframe id="service-frame" src="http://127.0.0.1:8000" frameborder="0" title="Service Content"></iframe>
+    </main>
+
+    <!-- 操作教學彈出視窗 -->
+    <div id="tutorial-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-labelledby="modal-title">
+            <div class="modal-header">
+                <h2 id="modal-title">如何使用 ZenVoice AI 禪音智友？</h2>
+                <button id="btn-close-modal" class="close-btn" aria-label="關閉視窗">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="tutorial-intro">只需三個步驟，就能輕鬆聽佛經：</p>
+                <div class="tutorial-steps">
+                    <div class="step-card">
+                        <div class="step-num">1</div>
+                        <h3>喚醒</h3>
+                        <p>對著麥克風說出：<br><strong>「小佛」</strong></p>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="step-card">
+                        <div class="step-num">2</div>
+                        <h3>播放</h3>
+                        <p>接著說出您想聽的經文：<br><strong>「念《心經》」</strong></p>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="step-card">
+                        <div class="step-num">3</div>
+                        <h3>控制</h3>
+                        <p>隨時用語音調整：<br><strong>「慢一點」</strong> 或 <strong>「暫停」</strong></p>
+                    </div>
+                </div>
+                <div class="tutorial-footer">
+                    <p>※ 小提示：下方畫面會與語音同步，實現「看著螢幕讀佛經」。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
