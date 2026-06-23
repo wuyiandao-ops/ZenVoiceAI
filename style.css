@@ -116,18 +116,126 @@ body {
     border-color: var(--accent-color);
 }
 
-/* --- 內容區塊 --- */
-.content-container {
+/* --- 雙欄佈局 (外殼) --- */
+.app-layout {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - 60px); /* 扣除 navbar 高度 */
+    padding: 15px;
+    gap: 15px;
+    width: 100%;
+}
+
+/* ================= 左側 1/4：說明區與筆記區 ================= */
+.left-section {
+    width: 320px; /* 固定寬度 */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex-shrink: 0;
+}
+
+.app-branding {
+    background: var(--nav-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    padding: 20px;
+}
+.app-branding h3 {
+    font-size: var(--font-xl);
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--accent-color);
+}
+.app-branding p {
+    font-size: var(--font-base);
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.notes-container {
+    flex: 1;
+    background: var(--nav-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.notes-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0,0,0,0.2);
+}
+.notes-header h2 {
+    font-size: 15px;
+    color: var(--accent-color);
+}
+.action-btn {
+    padding: 6px 12px;
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.action-btn:hover { background: rgba(212, 163, 115, 0.15); }
+
+.notes-body {
+    flex: 1;
+    padding: 15px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    overflow-y: auto;
+}
+
+/* 筆記項目 */
+.note-item {
+    background: rgba(212, 163, 115, 0.05);
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    position: relative;
+    border-left: 3px solid var(--accent-color);
+    color: var(--text-primary);
+}
+.note-item .delete-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    color: #b86b6b;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+/* 滾動條樣式 */
+.scrollable::-webkit-scrollbar { width: 6px; }
+.scrollable::-webkit-scrollbar-track { background: transparent; }
+.scrollable::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
+
+/* ================= 右側：動態內容區 ================= */
+.right-section {
     flex: 1;
     position: relative;
-    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    background-color: var(--nav-bg);
 }
 
 #service-frame {
     width: 100%;
     height: 100%;
     border: none;
-    background-color: #ffffff;
     transition: opacity 0.4s ease;
 }
 

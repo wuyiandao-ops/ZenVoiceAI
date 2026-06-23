@@ -5,17 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZenVoiceAI 禪音智友 - 無障礙語音助手</title>
     <link rel="stylesheet" href="style.css">
-    <!-- 引入 Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="navbar">
-
         <nav class="nav-buttons">
-            <!-- 預設載入 NO4 -->
-            <button class="nav-btn active" data-target="http://127.0.0.1:8000" aria-label="切換至 Cbeta 名詞查詢">Cbeta 名詞查詢</button>
-            <button class="nav-btn" data-target="http://localhost:5173" aria-label="切換至 文字轉檔與朗讀">文字轉檔與朗讀</button>
-            <button class="nav-btn" data-target="http://127.0.0.1:5000" aria-label="切換至 智能語音MP3撥放">智能語音MP3撥放</button>
+            <button class="nav-btn active" data-target="http://127.0.0.1:5000" data-id="1">1. 智能語音MP3播放</button>
+            <button class="nav-btn" data-target="http://127.0.0.1:8001" data-id="2">2. Cbeta名詞查詢</button>
+            <button class="nav-btn" data-target="http://localhost:5173/?view=converter" data-id="3">3. 文字轉檔語音</button>
+            <button class="nav-btn" data-target="http://localhost:5173/?view=dictionary" data-id="4">4. 發音校正字典</button>
+            <button class="nav-btn" data-target="http://localhost:5173/player/index.html" data-id="5">5. 逐行朗讀文字</button>
         </nav>
 
         <div class="tools-section">
@@ -26,16 +25,39 @@
         </div>
     </header>
 
-    <main class="content-container">
-        <div class="loader" id="loader">
-            <div class="spinner"></div>
-            <p>正在為您準備服務，請稍候...</p>
-        </div>
-        <iframe id="service-frame" src="http://127.0.0.1:8000" frameborder="0" title="Service Content"></iframe>
+    <main class="app-layout">
+        <!-- 左側固定欄 -->
+        <section class="left-section">
+            <!-- 功能說明區 -->
+            <div id="function-explanation" class="app-branding">
+                <!-- JS 動態寫入內容 -->
+            </div>
+            
+            <!-- 全域摘錄筆記區 -->
+            <div class="notes-container">
+                <div class="notes-header">
+                    <h2>📝 摘錄筆記區</h2>
+                    <button id="btn-export-notes" class="action-btn">匯出筆記</button>
+                </div>
+                <div class="notes-body scrollable" id="notesArea">
+                    （目前尚未圈選任何重點，請在右側文字區圈選後，系統會自動摘錄至此）
+                </div>
+            </div>
+        </section>
+
+        <!-- 右側動態內容區 -->
+        <section class="right-section">
+            <div class="loader" id="loader">
+                <div class="spinner"></div>
+                <p>正在為您準備服務，請稍候...</p>
+            </div>
+            <iframe id="service-frame" src="http://127.0.0.1:5000" frameborder="0" title="Service Content"></iframe>
+        </section>
     </main>
 
     <!-- 操作教學彈出視窗 -->
     <div id="tutorial-modal" class="modal-overlay" aria-hidden="true">
+        <!-- 原本的教學內容 -->
         <div class="modal-content" role="dialog" aria-labelledby="modal-title">
             <div class="modal-header">
                 <h2 id="modal-title">如何使用 ZenVoice AI 禪音智友？</h2>
@@ -61,9 +83,6 @@
                         <h3>控制</h3>
                         <p>隨時用語音調整：<br><strong>「慢一點」</strong> 或 <strong>「暫停」</strong></p>
                     </div>
-                </div>
-                <div class="tutorial-footer">
-                    <p>※ 小提示：下方畫面會與語音同步，實現「看著螢幕讀佛經」。</p>
                 </div>
             </div>
         </div>
