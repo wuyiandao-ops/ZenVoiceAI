@@ -232,11 +232,21 @@ body {
     background-color: var(--nav-bg);
 }
 
-#service-frame {
+.service-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     border: none;
     transition: opacity 0.4s ease;
+    opacity: 0;
+    pointer-events: none; /* 隱藏時不可點擊 */
+}
+
+.service-frame.active {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 /* --- 載入動畫 (禪意版) --- */

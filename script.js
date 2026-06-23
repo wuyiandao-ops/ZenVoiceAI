@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('.nav-btn');
-    const iframe = document.getElementById('service-frame');
+    const iframeContainer = document.getElementById('iframe-container');
     const loader = document.getElementById('loader');
     const explanationArea = document.getElementById('function-explanation');
     const notesArea = document.getElementById('notesArea');
@@ -19,14 +19,41 @@ document.addEventListener('DOMContentLoaded', () => {
         explanationArea.innerHTML = explanations[id] || '';
     }
 
-    // 初始化預設說明
-    updateExplanation('1');
+    // SPA 多重視窗框架管理
+    const iframes = {};
+    let currentActiveId = null;
 
-    // 處理 iframe 載入完成事件，隱藏 loader
-    iframe.addEventListener('load', () => {
-        loader.classList.remove('active');
-        iframe.style.opacity = '1';
-    });
+    function getOrCreateIframe(id, url) {
+        if (iframes[id]) return iframes[id];
+
+        const newIframe = document.createElement('iframe');
+        newIframe.className = 'service-frame';
+        newIframe.src = url;
+        newIframe.frameBorder = "0";
+        newIframe.allow = "microphone; autoplay";
+        newIframe.title = "Service Content " + id;
+
+        newIframe.addEventListener('load', () => {
+            newIframe.dataset.loaded = 'true';
+            if (currentActiveId === id) {
+                loader.classList.remove('active');
+            }
+        });
+
+        iframeContainer.appendChild(newIframe);
+        iframes[id] = newIframe;
+        return newIframe;
+    }
+
+    // 初始化預設說明與第一個畫面
+    const firstBtn = document.querySelector('.nav-btn.active');
+    if (firstBtn) {
+        currentActiveId = firstBtn.getAttribute('data-id');
+        updateExplanation(currentActiveId);
+        const firstUrl = firstBtn.getAttribute('data-target');
+        const firstIframe = getOrCreateIframe(currentActiveId, firstUrl);
+        firstIframe.classList.add('active');
+    }
 
     buttons.forEach(button => {
         button.addEventListener('click', () => {
@@ -37,12 +64,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const btnId = button.getAttribute('data-id');
             updateExplanation(btnId);
 
-            if (iframe.src !== targetUrl) {
+            if (currentActiveId !== btnId) {
                 loader.classList.add('active');
-                iframe.style.opacity = '0.5';
+                
+                // 隱藏目前所有的 iframe
+                Object.values(iframes).forEach(f => {
+                    f.classList.remove('active');
+                });
+
+                currentActiveId = btnId;
+                
                 setTimeout(() => {
-                    iframe.src = targetUrl;
-                }, 300);
+                    const targetIframe = getOrCreateIframe(btnId, targetUrl);
+                    targetIframe.classList.add('active');
+                    
+                    if (targetIframe.dataset.loaded === 'true') {
+                        loader.classList.remove('active');
+                    }
+                }, 300); // 配合 CSS transition
             }
         });
     });
